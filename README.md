@@ -71,8 +71,8 @@ Invoke-PowerDPAPI -Path <file/directory path> -Format base64 -Verbose
 ## BloodHound/OpenGraph Visualization
 This workflow demonstrates how to map the cryptographic surface area of a system into a graph database.
 **Preparation**
-1. Load the DPAPI model using HoundTrainer, curl, or another utility.
-2. Scan the target directory for DPAPI blobs and output nodes and edges to 'example.json' in OpenGraph format
+1. Load the DPAPI model using [HoundTrainer](https://github.com/toneillcodes/HoundTrainer), curl, or another utility.
+2. Scan the target directory for DPAPI blobs, outputting nodes and edges to 'example.json' in OpenGraph format
 ```
 *Evil-WinRM* PS C:\Users\sample.user\Documents> Invoke-PowerDPAPI -Path C:\dev\training\dpapi\tmp -Graph example.json
 [*] Running PowerDPAPI
@@ -100,63 +100,63 @@ This workflow demonstrates how to map the cryptographic surface area of a system
 [*] Done.
 *Evil-WinRM* PS C:\Users\sample.user\Documents>
 ```
-2. Check graph output
+2. Retrieve graph output  
+**NOTE**: The following output has been formatted for readability (JSON pretty-print) and won't look this neat IRL.
 ```
 *Evil-WinRM* PS C:\Users\sample.user\Documents> type example.json
 {
-    "metadata":  {
-                     "source_kind":  "DPAPI"
-                 },
-    "graph":  {
-                  "nodes":  [
-                                {
-                                    "id":  "C:\\dev\\training\\dpapi\\tmp\\encrypted.out",
-                                    "kinds":  [
-                                                  "DPAPIBlob",
-                                                  "DPAPI"
-                                              ],
-                                    "properties":  {
-                                                       "name":  "encrypted.out",
-                                                       "modified_at":  "2025-12-31 00:02:20",
-                                                       "size_bytes":  162,
-                                                       "extension":  ".out",
-                                                       "created_at":  "2025-12-30 23:53:06",
-                                                       "full_path":  "C:\\dev\\training\\dpapi\\tmp\\encrypted.out"
-                                                   }
-                                },
-                                {
-                                    "id":  "e327752c-b394-4444-a8f9-9309e6087316",
-                                    "kinds":  [
-                                                  "DPAPIMasterKey",
-                                                  "DPAPI"
-                                              ],
-                                    "properties":  {
-                                                       "Username":  "MACHINE\\sample.user",
-                                                       "Owner_SID":  "S-1-5-21-1487982659-1829050783-2281216199-1107",
-                                                       "Version":  2,
-                                                       "Iterations":  6422573,
-                                                       "Salt_Hex":  "65003300320037003700350032006300",
-                                                       "Created_At":  "2025-12-30 22:27:56",
-                                                       "Full_Path":  "C:\\Users\\sample.user\\AppData\\Roaming\\Microsoft\\Protect\\S-1-5-21-1487982659-1829050783-2281216199-1107\\e327752c-b394-4444-a8f9-9309e6087316",
-                                                       "GUID":  "e327752c-b394-4444-a8f9-9309e6087316"
-                                                   }
-                                }
-                            ],
-                  "edges":  [
-                                {
-                                    "kind":  "EncryptedWith",
-                                    "start":  {
-                                                  "value":  "C:\\dev\\training\\dpapi\\tmp\\encrypted.out"
-                                              },
-                                    "end":  {
-                                                "value":  "e327752c-b394-4444-a8f9-9309e6087316"
-                                            },
-                                    "properties":  {
-
-                                                   }
-                                }
-                            ]
-              }
+    "metadata": {
+        "source_kind": "DPAPI"
+    },
+    "graph": {
+        "nodes": [
+            {
+                "id": "C:\\dev\\training\\dpapi\\tmp\\encrypted.out",
+                "kinds": [
+                    "DPAPIBlob",
+                    "DPAPI"
+                ],
+                "properties": {
+                    "name": "encrypted.out",
+                    "modified_at": "2025-12-31 00:02:20",
+                    "size_bytes": 162,
+                    "extension": ".out",
+                    "created_at": "2025-12-30 23:53:06",
+                    "full_path": "C:\\dev\\training\\dpapi\\tmp\\encrypted.out"
+                }
+            },
+            {
+                "id": "e327752c-b394-4444-a8f9-9309e6087316",
+                "kinds": [
+                    "DPAPIMasterKey",
+                    "DPAPI"
+                ],
+                "properties": {
+                    "Username": "MACHINE\\sample.user",
+                    "Owner_SID": "S-1-5-21-1487982659-1829050783-2281216199-1107",
+                    "Version": 2,
+                    "Iterations": 6422573,
+                    "Salt_Hex": "65003300320037003700350032006300",
+                    "Created_At": "2025-12-30 22:27:56",
+                    "Full_Path": "C:\\Users\\sample.user\\AppData\\Roaming\\Microsoft\\Protect\\S-1-5-21-1487982659-1829050783-2281216199-1107\\e327752c-b394-4444-a8f9-9309e6087316",
+                    "GUID": "e327752c-b394-4444-a8f9-9309e6087316"
+                }
+            }
+        ],
+        "edges": [
+            {
+                "kind": "EncryptedWith",
+                "start": {
+                    "value": "C:\\dev\\training\\dpapi\\tmp\\encrypted.out"
+                },
+                "end": {
+                    "value": "e327752c-b394-4444-a8f9-9309e6087316"
+                },
+                "properties": {
+                }
+            }
+        ]
+    }
 }
 *Evil-WinRM* PS C:\Users\sample.user\Documents> 
 ```

@@ -240,14 +240,14 @@ function Invoke-PowerDPAPI {
 						extension     = $blobFileInfo.Extension
 					}
 
-					$dpapiBlob_Node = New-OpenGraphNode -NodeId $file -NodeKind 'DPAPIBlob' -SourceKind 'DPAPI' -Properties $blobProperties
+					$dpapiBlob_Node = New-OpenGraphNode -NodeId $blobFileName -NodeKind 'DPAPIBlob' -SourceKind 'DPAPI' -Properties $blobProperties
 					$null = $nodeList.Add($dpapiBlob_Node)
 
 					# Add to CSV collection
 					# todo: flatten properties
                     $null = $csvCollection.Add([PSCustomObject]$dpapiBlob_Node)
 
-					$dpapiBlobToMk_Edge = New-OpenGraphEdge -EdgeName 'EncryptedWith'-SourceNodeId $file -TargetNodeId $masterKeyGuid
+					$dpapiBlobToMk_Edge = New-OpenGraphEdge -EdgeName 'EncryptedWith'-SourceNodeId $blobFileName -TargetNodeId $masterKeyGuid
 					$null = $edgeList.Add($dpapiBlobToMk_Edge)
 					
 					# Add to CSV collection (flattening the properties for CSV format)
